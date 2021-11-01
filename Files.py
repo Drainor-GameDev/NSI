@@ -1,3 +1,5 @@
+from Cartes import *
+
 class File:
     """
     Gère les files FIFO
@@ -18,23 +20,38 @@ class File:
         - estFileVide : teste si la file est vide
         - getters pour nb_elements, premier et dernier
     """
+    _file = None
+    _nb_elements = 0
+    _premier = None
+    _dernier = None
 
     def __init__(self, liste=None):
         """Constructeur de la file
         Remarque : écrire self._file = liste copie l'adresse de liste dans self._file.
-        Ceci peut poserdes problèmes.
+        Ceci peut poser des problèmes.
         En effet, si par la suite on modifie liste, alors on modifiera aussi self._file
         """
         self._file = []
         if liste is None:
-
+            self._nb_elements = 0
+            self._premier = None
+            self._dernier = None
         else:
+            for i in range(len(liste)):
+                self._file.append(liste[i])
+
 
     def estFileVide(self):
 
+        return len(self._file) == 0
+
     def enfiler(self, element):
 
+        self._file = [element] + self._file
+
     def defiler(self):
+
+       del(self._file[0])
 
     # getters
     def premier(self):

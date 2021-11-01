@@ -48,15 +48,15 @@ class Carte:
     def setValeur(self, nouvValeur):
         self._valeur = nouvValeur
 
-
-# def __repr__(self):
-# return f'{self._hauteur} de {self._couleur}, valeur {self._valeur}'
+    def __repr__(self):
+        return f'{self._hauteur} de {self._couleur}, valeur {self._valeur}'
 
 roiCarreau = Carte('carreau', 'roi', 13)
 septPique = Carte('pique', 'sept', 7)
 print(roiCarreau.estSuperieure(septPique))
 print(septPique.estSuperieure(roiCarreau))
 print(roiCarreau.getHauteur())
+print(roiCarreau)
 
 
 class PaquetCartes:
@@ -83,7 +83,7 @@ class PaquetCartes:
             for j in range(len(self._couleurs)):
                 self._paquet.append(Carte(self._couleurs[j], self._hauteurs[0], 14))
         else:
-            for i in range(1, len(self._hauteurs)):
+            for i in range(len(self._hauteurs) - int(nbCartes/4), len(self._hauteurs)):
                 for j in range(len(self._couleurs)):
                     self._paquet.append(Carte(self._couleurs[j], self._hauteurs[i], i + 1))
             for j in range(len(self._couleurs)):
@@ -102,16 +102,20 @@ class PaquetCartes:
                     tableauCartes.append(self._paquet[y])
                 tableauJeu.append(tableauCartes)
         else:
-            for i in range(nbJoueurs):
-                tableauCartes = []
-                for y in range(self._nbCartes):
-                    tableauCartes.append(self._paquet[y])
+            tableauCartes = [[],[],[]] #/!\ IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            for i in range(1, int(self._nbCartes/ nbJoueurs)+1):
+                for y in range(nbJoueurs):
+                    tableauCartes[y].append(self._paquet[y])
+                for i in range(nbJoueurs):
+                    self._paquet.remove(self._paquet[i])
                 tableauJeu.append(tableauCartes)
-        return tableauJeu
+        return tableauCartes
 
     def getPaquet(self):
         return self._paquet
 
 
-paquetBataille = PaquetCartes('bataille', 32)
+paquetBataille = PaquetCartes('bataille', 12)
+print(paquetBataille.distribution(3))
+
 

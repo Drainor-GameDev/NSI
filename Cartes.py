@@ -1,3 +1,4 @@
+from random import shuffle
 class Carte:
     """Carte d'un paquet de cartes, pour jouer à différents jeux.
     On reste dans les paquets 32/52/54 cartes ou tarot
@@ -78,7 +79,7 @@ class PaquetCartes:
         if nbCartes == 32:
             for i in range(6, len(self._hauteurs)):
                 for j in range(len(self._couleurs)):
-                    self._paquet.append(Carte(self.couleurs[j], self._hauteurs[i], i + 1))
+                    self._paquet.append(Carte(self._couleurs[j], self._hauteurs[i], i + 1))
             for j in range(len(self._couleurs)):
                 self._paquet.append(Carte(self._couleurs[j], self._hauteurs[0], 14))
         else:
@@ -88,8 +89,29 @@ class PaquetCartes:
             for j in range(len(self._couleurs)):
                 self._paquet.append(Carte(self._couleurs[j], self._hauteurs[0], 14))
 
+    def melange(self):
+        shuffle(self._paquet)
+        return self
+    def distribution(self, nbJoueurs, nbADistribuer = 0):
+        assert self._nbCartes > nbADistribuer * 2
+        tableauJeu = []
+        if nbADistribuer > 0:
+            for i in range(nbJoueurs):
+                tableauCartes = []
+                for y in range(nbADistribuer):
+                    tableauCartes.append(self._paquet[y])
+                tableauJeu.append(tableauCartes)
+        else:
+            for i in range(nbJoueurs):
+                tableauCartes = []
+                for y in range(self._nbCartes):
+                    tableauCartes.append(self._paquet[y])
+                tableauJeu.append(tableauCartes)
+        return tableauJeu
+
     def getPaquet(self):
         return self._paquet
 
 
-paquetBataille = PaquetCartes('bataille', 52)
+paquetBataille = PaquetCartes('bataille', 32)
+

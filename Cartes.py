@@ -102,7 +102,9 @@ class PaquetCartes:
                     tableauCartes.append(self._paquet[y])
                 tableauJeu.append(tableauCartes)
         else:
-            tableauCartes = [[],[],[]] #/!\ IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            tableauCartes = []
+            for i in range(nbJoueurs):
+                tableauCartes += [],
             for i in range(1, int(self._nbCartes/ nbJoueurs)+1):
                 for y in range(nbJoueurs):
                     tableauCartes[y].append(self._paquet[y])

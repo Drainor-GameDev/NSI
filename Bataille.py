@@ -1,3 +1,6 @@
+from typing import List
+from Cartes import *
+from Files import *
 class JeuBataille:
     """
     Jeu de bataille
@@ -27,7 +30,7 @@ class JeuBataille:
         """Constructeur du jeu"""
         self._nomjoueur1 = nom_joueur1
         self._nomjoueur2 = nom_joueur2
-        self._paquetBataille = PaquetCartes('bataille', 6)
+        self._paquetBataille = PaquetCartes('bataille', 20)
         donne = self._paquetBataille.melange().distribution(2)
         self._cartesj1 = File(donne[0])
         self._cartesj2 = File(donne[1])
@@ -42,8 +45,38 @@ class JeuBataille:
     def jouer(self):
         # jouez avec très peu de cartes (4 à 10).
         # Fixez un maximum de nombre de tours de jeu
-
-        return (match_nul, gagnant, self._nb_batailles, self._nb_tours)
+        prize = File()
+        matchNull = False
+        while self._nb_tours < 50 and not self._cartesj1.estFileVide() and not self._cartesj2.estFileVide():
+            self._nb_tours += 1
+            carte1 = self._cartesj1.premier()
+            carte2 = self._cartesj2.premier()
+            if carte2.estSuperieure(carte1):
+                self._cartesj2.enfiler(self._cartesj1.defiler())
+                self._cartesj2.enfiler(self._cartesj2.defiler())
+                #self._cartesj1.defiler()
+                #self._cartesj2.defiler()
+                while not prize.estFileVide():
+                    self._cartesj1.enfiler(prize.defiler())
+            elif carte1.estSuperieure(carte2):
+                self._cartesj1.enfiler(self._cartesj2.defiler())
+                self._cartesj1.enfiler(self._cartesj1.defiler())
+                while not prize.estFileVide():
+                    self._cartesj1.enfiler(prize.defiler())
+            else:
+                self._nb_batailles += 1
+                for i in range(2):
+                    if not self._cartesj2.estFileVide():
+                        prize.enfiler(self._cartesj2.defiler())
+                    if not self._cartesj1.estFileVide():
+                        prize.enfiler(self._cartesj1.defiler())
+        if self._cartesj1.estFileVide():
+            gagnant = self._nomjoueur2
+        elif self._cartesj2.estFileVide():
+            gagnant = self._nomjoueur1
+        else:
+            matchNull = True
+        return (matchNull, gagnant, self._nb_batailles, self._nb_tours)
 
 
 baston = JeuBataille()

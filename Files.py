@@ -82,16 +82,3 @@ class File:
                 print(element)
             else:
                 print(element, "n'est pas une carte")
-
-"""
-ma_file = File([11, 22, 33, 44, 55])
-ma_file.printFile()
-ma_file.enfiler(66)
-print(ma_file.premier(), ma_file.dernier(), ma_file.getNb_elements())
-long_ma_file = ma_file.getNb_elements()
-for i in range(long_ma_file):
-    print(ma_file.defiler())
-print(ma_file.defiler())
-ma_file2 = File()
-print(ma_file2.premier(), ma_file2.dernier(), ma_file2.getNb_elements())
-"""

@@ -38,7 +38,11 @@ class File:
             self._dernier = None
         else:
             for i in range(len(liste)):
+                self._nb_elements += 1
                 self._file.append(liste[i])
+                self._dernier = liste[i]
+            self._premier = self._file[0]
+            
 
 
     def estFileVide(self):
@@ -46,12 +50,20 @@ class File:
         return len(self._file) == 0
 
     def enfiler(self, element):
-
+        self._dernier = element
+        if self._nb_elements == 0:
+            self._premier = element
+        self._nb_elements += 1
         self._file = [element] + self._file
 
     def defiler(self):
-
-       del(self._file[0])
+        self._nb_elements -= 1
+        if self._nb_elements > 0:
+            self._premier = self._file[1]
+        else:
+             self._premier = None
+             self._dernier = None
+        return self._file.pop()
 
     # getters
     def premier(self):
@@ -71,7 +83,7 @@ class File:
             else:
                 print(element, "n'est pas une carte")
 
-
+"""
 ma_file = File([11, 22, 33, 44, 55])
 ma_file.printFile()
 ma_file.enfiler(66)
@@ -82,3 +94,4 @@ for i in range(long_ma_file):
 print(ma_file.defiler())
 ma_file2 = File()
 print(ma_file2.premier(), ma_file2.dernier(), ma_file2.getNb_elements())
+"""
